@@ -1,0 +1,55 @@
+version: '3'
+
+volumes:
+  server: 
+    driver: local
+
+services:
+  server:
+    image: devpi
+    build: .
+    pull_policy: build
+
+    volumes:
+      - server:/var/lib/devpi
+
+    ports:
+      - "3141:3141"
+
+    environment:
+      # [default: 0.0.0.0]
+      # HOST: 0.0.0.0
+
+      # [default: 3141]
+      # PORT: 3141
+
+      # [default: /var/lib/devpi]
+      # SERVER_DIR: /var/lib/devpi
+
+      # options: master|replica|standalone|auto [default: auto]
+      # ROLE: auto
+
+      ROOT_PASSWORD: roottest
+
+      # USER_NAME= and USER_PASSWORD= is optional
+      # when given user will be created
+      USER_NAME: user
+      USER_PASSWORD: usertest
+
+      # INDEX_NAME= is optional
+      # when given index will be created
+      # when USER_NAME= given owner will be user otherwise root
+      INDEX_NAME: private
+
+      # extra options for `devpi index --create ...` command
+      # INDEX_EXTRA_ARGS: bases=root/pypi volatile=True
+      
+      # extra options for `devpi-init ...` command
+      # INIT_EXTRA_ARGS: --no-root-pypi
+
+      # extra options for `devpi-server ...` command
+      # SERVER_EXTRA_ARGS: --restrict-modify=root --debug
+
+
+
+

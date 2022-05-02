@@ -1,0 +1,10 @@
+#!/bin/bash
+
+[ $# -gt 0 ] && [ "${1:0:1}" != "-" ] && service_name=$1
+
+[ -z "$service_name" ] && service_name=devpi_server
+bin/wait-container $service_name
+
+set -x
+docker service logs "$service_name" "$@"
+

@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+. /docker/lib.sh
+
+[ -z "$SERVER_DIR" ]    && die "SERVER_DIR= missing"
+[ -z "$ROLE" ]          && die "ROLE= missing"
+[ -z "$ROOT_PASSWORD" ] && die "ROOT_PASSWORD= missing"
+
+if [ ! -e "$SERVER_DIR/.nodeinfo" ]; then
+  devpi-init \
+    --serverdir "$SERVER_DIR" \
+    --role "$ROLE" \
+    --root-passwd "$ROOT_PASSWORD" \
+    $INIT_EXTRA_ARGS
+else
+  touch "$SERVER_DIR/.skipinit"
+fi
+
+[ -e "$SERVER_DIR/secret" ] || devpi-gen-secret --secretfile "$SERVER_DIR/secret"
+

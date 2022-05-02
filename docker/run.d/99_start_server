@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+. /docker/lib.sh
+
+[ -z "$HOST" ]        && die "HOST= missing"
+[ -z "$SERVER_DIR" ]  && die "SERVER_DIR= missing"
+[ -z "$ROLE" ]        && die "ROLE= missing"
+
+unset ROOT_PASSWORD
+unset USER_PASSWORD
+
+/usr/local/bin/devpi-server \
+  --host "$HOST" \
+  --port "$PORT" \
+  --serverdir "$SERVER_DIR" \
+  --secretfile "$SERVER_DIR/secret" \
+  --role "$ROLE" \
+  $SERVER_EXTRA_ARGS
+

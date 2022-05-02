@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+. /docker/lib.sh
+set_defaults
+
+for job in /docker/run.d/*; do
+  echo -n "> INVOKE: $job"
+  if [[ $job == *.bg ]]; then
+    echo " [background]"
+    $job &
+  else
+    echo
+    $job
+  fi  
+done

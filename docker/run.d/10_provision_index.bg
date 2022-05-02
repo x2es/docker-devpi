@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+[ -z "$SERVER_DIR" ]    && die "SERVER_DIR= missing"
+[ -z "$PORT" ]          && die "PORT= missing"
+[ -z "$ROOT_PASSWORD" ] && die "ROOT_PASSWORD= missing"
+[ -z "$INDEX_NAME" ]    && die "INDEX_NAME= missing"
+
+SERVER_URL="http://localhost:$PORT"
+
+[ -e "$SERVER_DIR/.skipinit" ] && exit 0
+[ -z "$USER_NAME" ] && [ -z "$INDEX_NAME" ] && exit 0
+
+/docker/wait-http "$SERVER_URL"
+devpi use "$SERVER_URL"
+devpi login root --password "$ROOT_PASSWORD"
+
+if [ ! -z "$USER_NAME" ]; then
+  [ -z "$USER_PASSWORD" ] && die "USER_PASSWORD= missing (required when USER_NAME= given)"
+  devpi user -l | grep "$USER_NAME" || devpi user --create "$USER_NAME" password="$USER_PASSWORD"
+  devpi login "$USER_NAME" --password "$USER_PASSWORD"
+fi
+
+if [ ! -z "$INDEX_NAME" ]; then
+  devpi index -l | grep "$INDEX_NAME" || devpi index --create "$INDEX_NAME" $INDEX_EXTRA_ARGS
+fi
+
+devpi logout
