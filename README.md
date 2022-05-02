@@ -8,7 +8,7 @@ Just clone & go!
 
 ## Prerequisites
 
-Docker and docker-compose installed.
+Docker and docker compose installed.
 See:
  * https://docs.docker.com/engine/install/
  * https://docs.docker.com/compose/install/
@@ -19,7 +19,7 @@ See:
 ```console
 $ git clone git@github.com:x2es/docker-devpi.git
 $ cd docker-devpi
-$ docker-compose up
+$ docker compose up
 ```
 
 ### Run as service
