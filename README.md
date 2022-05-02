@@ -9,12 +9,15 @@ Just clone & go!
 ## Prerequisites
 
 Docker and docker-compose installed.
+See:
+ * https://docs.docker.com/engine/install/
+ * https://docs.docker.com/compose/install/
 
 
 ## Install & Run
 
 ```console
-$ git clone ....
+$ git clone git@github.com:x2es/docker-devpi.git
 $ cd docker-devpi
 $ docker-compose up
 ```
@@ -144,3 +147,12 @@ $ (Ubuntu) journalctl -u docker.service
 ```
 
 see https://stackoverflow.com/a/45373282/983232
+
+
+### Full cleanup
+
+**CAUTION** it will cleanup all data related to `devpi`.
+
+```console
+$ ( set -x; docker-compose rm; docker volume rm devpi_server; docker image rm devpi )
+```
