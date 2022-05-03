@@ -13,6 +13,12 @@ See:
  * https://docs.docker.com/engine/install/
  * https://docs.docker.com/compose/install/
 
+Unless you add user to `docker` group you have to prepend `docker` and tools commands with `sudo` like
+
+```console
+$ sudo docker compose up
+$ sudo bin/start
+```
 
 ## Install & Run
 
@@ -128,7 +134,8 @@ see bin/log content for details
 ### Chaining
 
 ```console
-$ bin/start && bin/wait-container devpi_server && bin/log -f
+$ bin/start && bin/wait-container devpi_server && bin/console devpi_server ls
+$ bin/start && bin/log -f
 ```
 
 
@@ -154,5 +161,7 @@ see https://stackoverflow.com/a/45373282/983232
 **CAUTION** it will cleanup all data related to `devpi`.
 
 ```console
-$ ( set -x; docker-compose rm; docker volume rm devpi_server; docker image rm devpi )
+$ ( set -x; docker compose rm; docker volume rm devpi_server; docker image rm devpi )
+or
+$ ( set -x; sudo docker compose rm; sudo docker volume rm devpi_server; sudo docker image rm devpi )
 ```
